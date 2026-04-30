@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>たい焼きタイム vs 授業三昧 — 特徴比較ガイド</title>
+  <style>
+    :root {
+      --tai:      #d97706;   /* たい焼き amber */
+      --tai-lt:   #fffbeb;
+      --tai-md:   #fde68a;
+      --tai-dk:   #92400e;
+      --zan:      #2563eb;   /* 授業三昧 blue */
+      --zan-lt:   #eff6ff;
+      --zan-md:   #bfdbfe;
+      --zan-dk:   #1e3a8a;
+      --ok:       #16a34a;
+      --ok-lt:    #dcfce7;
+      --ng:       #dc2626;
+      --ng-lt:    #fee2e2;
+      --text:     #1a1a2e;
+      --muted:    #6b7280;
+      --border:   #e5e7eb;
+      --bg:       #f8fafc;
+      --surface:  #ffffff;
+      --radius:   12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #2d2d4e 100%);
+      color: #fff;
+      padding: 52px 24px 44px;
+      text-align: center;
+    }
+    header .eyebrow {
+      font-size: .8rem;
+      letter-spacing: .12em;
+      opacity: .6;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    header h1 {
+      font-size: 1.9rem;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 14px;
+    }
+    header h1 .tai  { color: #fbbf24; }
+    header h1 .zan  { color: #93c5fd; }
+    header .subtitle {
+      font-size: .95rem;
+      opacity: .78;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* ── LAYOUT ── */
+    .wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 18px 80px;
+    }
+
+    section { margin-bottom: 36px; }
+
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--text);
+      border-left: 4px solid #94a3b8;
+      padding-left: 12px;
+      margin-bottom: 20px;
+    }
+
+    /* ── HERO CARDS ── */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    @media (max-width: 620px) { .hero-grid { grid-template-columns: 1fr; } }
+
+    .hero-card {
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      border: 2px solid transparent;
+    }
+    .hero-card.tai {
+      background: var(--tai-lt);
+      border-color: var(--tai);
+    }
+    .hero-card.zan {
+      background: var(--zan-lt);
+      border-color: var(--zan);
+    }
+    .hero-card .label {
+      display: inline-block;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      border-radius: 4px;
+      padding: 3px 10px;
+      margin-bottom: 12px;
+    }
+    .tai .label { background: var(--tai); color: #fff; }
+    .zan .label { background: var(--zan); color: #fff; }
+
+    .hero-card h2 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    .tai h2 { color: var(--tai-dk); }
+    .zan h2 { color: var(--zan-dk); }
+
+    .hero-card .pitch {
+      font-size: .95rem;
+      margin-bottom: 14px;
+    }
+    .hero-card .one-liner {
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 8px;
+      padding: 10px 14px;
+    }
+    .tai .one-liner { background: var(--tai-md); color: var(--tai-dk); }
+    .zan .one-liner { background: var(--zan-md); color: var(--zan-dk); }
+
+    /* ── DIFF BLOCK ── */
+    .diff-block {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    @media (max-width: 620px) { .diff-block { grid-template-columns: 1fr; } }
+
+    .diff-col {
+      padding: 24px 22px;
+    }
+    .diff-col.tai { background: var(--tai-lt); border-right: 1px solid var(--border); }
+    .diff-col.zan { background: var(--zan-lt); }
+    @media (max-width: 620px) {
+      .diff-col.tai { border-right: none; border-bottom: 1px solid var(--border); }
+    }
+    .diff-col h3 {
+      font-size: .85rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      margin-bottom: 10px;
+    }
+    .tai h3 { color: var(--tai-dk); }
+    .zan h3 { color: var(--zan-dk); }
+    .diff-col p { font-size: .92rem; line-height: 1.75; }
+    .diff-col strong { font-weight: 700; }
+
+    .diff-header {
+      background: #1a1a2e;
+      color: #fff;
+      padding: 12px 22px;
+      font-size: .88rem;
+      font-weight: 700;
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .diff-header .num {
+      background: rgba(255,255,255,.15);
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .78rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* ── STRENGTH / WEAKNESS ── */
+    .sw-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    @media (max-width: 620px) { .sw-grid { grid-template-columns: 1fr; } }
+
+    .sw-card {
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .sw-card-head {
+      padding: 14px 20px;
+      font-weight: 700;
+      font-size: .92rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sw-card-head.tai-str  { background: var(--tai); color: #fff; }
+    .sw-card-head.tai-weak { background: #fef3c7; color: var(--tai-dk); }
+    .sw-card-head.zan-str  { background: var(--zan); color: #fff; }
+    .sw-card-head.zan-weak { background: #dbeafe; color: var(--zan-dk); }
+
+    .sw-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .sw-list li {
+      padding: 11px 18px;
+      border-bottom: 1px solid var(--border);
+      font-size: .9rem;
+      line-height: 1.6;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .sw-list li:last-child { border-bottom: none; }
+    .sw-list li .icon { flex-shrink: 0; margin-top: 2px; }
+
+    /* ── USE CASE ── */
+    .usecase-table-wrap {
+      overflow-x: auto;
+    }
+    .usecase-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 560px;
+    }
+    .usecase-table th {
+      padding: 12px 14px;
+      font-size: .85rem;
+      font-weight: 700;
+      text-align: center;
+    }
+    .usecase-table th:first-child { text-align: left; background: #1a1a2e; color: #fff; }
+    .usecase-table th.th-tai { background: var(--tai); color: #fff; }
+    .usecase-table th.th-zan { background: var(--zan); color: #fff; }
+    .usecase-table td {
+      padding: 11px 14px;
+      border-bottom: 1px solid var(--border);
+      font-size: .88rem;
+      vertical-align: middle;
+    }
+    .usecase-table td:first-child { font-weight: 500; background: #f8fafc; }
+    .usecase-table td:not(:first-child) { text-align: center; }
+    .usecase-table tr:nth-child(even) td:first-child { background: #f1f5f9; }
+
+    .mark-best { font-size: 1.2rem; }
+    .mark-ok   { font-size: 1rem; color: var(--ok); }
+    .mark-ng   { font-size: 1rem; color: var(--ng); }
+    .mark-note { font-size: .78rem; color: var(--muted); }
+
+    /* ── DECISION ── */
+    .decision-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    @media (max-width: 620px) { .decision-grid { grid-template-columns: 1fr; } }
+
+    .decision-card {
+      border-radius: var(--radius);
+      padding: 22px 20px;
+      border: 1.5px solid transparent;
+    }
+    .decision-card.tai { background: var(--tai-lt); border-color: var(--tai); }
+    .decision-card.zan { background: var(--zan-lt); border-color: var(--zan); }
+
+    .decision-card h3 {
+      font-size: .95rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(0,0,0,.08);
+    }
+    .tai h3 { color: var(--tai-dk); }
+    .zan h3 { color: var(--zan-dk); }
+
+    .decision-card ul {
+      list-style: none;
+      padding: 0;
+    }
+    .decision-card ul li {
+      font-size: .9rem;
+      padding: 5px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+    }
+    .decision-card ul li::before {
+      content: "▸";
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .tai ul li::before { color: var(--tai); }
+    .zan ul li::before { color: var(--zan); }
+
+    /* ── COMBO BOX ── */
+    .combo-box {
+      background: linear-gradient(135deg, #1a1a2e 0%, #2d2d4e 100%);
+      color: #fff;
+      border-radius: var(--radius);
+      padding: 28px 28px;
+    }
+    .combo-box h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      opacity: .9;
+    }
+    .combo-flow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: .9rem;
+      margin-bottom: 10px;
+    }
+    .combo-tag {
+      border-radius: 6px;
+      padding: 5px 12px;
+      font-weight: 700;
+      font-size: .85rem;
+      white-space: nowrap;
+    }
+    .combo-tag.tai { background: var(--tai); color: #fff; }
+    .combo-tag.zan { background: var(--zan); color: #fff; }
+    .combo-arrow { opacity: .5; font-size: 1.1rem; }
+    .combo-desc {
+      font-size: .85rem;
+      opacity: .75;
+      margin-top: 4px;
+      padding-left: 4px;
+    }
+
+    /* ── SURFACE CARD ── */
+    .surface {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 28px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.05);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: .78rem;
+      padding: 20px 0 40px;
+    }
+
+    /* ── UTIL ── */
+    .gap-block { margin-bottom: 14px; }
+    .text-sm { font-size: .88rem; }
+    .muted { color: var(--muted); }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="eyebrow">授業改善AIシステム 比較ガイド</div>
+  <h1><span class="tai">たい焼きタイム</span> と <span class="zan">授業三昧</span><br>どう違う？ どう使い分ける？</h1>
+  <p class="subtitle">同じ「授業改善AI」でも、設計思想が根本から異なります。特徴を正確に理解した上で使いましょう。</p>
+</header>
+
+<div class="wrapper">
+
+<!-- ① 一言で言うと -->
+<section>
+  <div class="section-title">一言で言うと</div>
+  <div class="hero-grid">
+
+    <div class="hero-card tai">
+      <div class="label">たい焼きタイム</div>
+      <h2>授業改善の仕事を<br>「前に進める」道具</h2>
+      <p class="pitch">
+        教師の語り・願い・困り感を受け取り、授業の核のたたき台を作る汎用ツール。誰でも使えて、どんな出力にも対応できる柔軟性が強みです。
+      </p>
+      <div class="one-liner">「何かを作りたい」「前に進みたい」ときのツール</div>
+    </div>
+
+    <div class="hero-card zan">
+      <div class="label">授業三昧</div>
+      <h2>授業の本当の問いを<br>「問い直す」環境</h2>
+      <p class="pitch">
+        「子どもの意味づけの変化」という授業観を軸に、急がず・手立てに飛ばず、学びの流れを深く設計するための個人R&D環境です。
+      </p>
+      <div class="one-liner">「何がおかしいか」「深く設計したい」ときの環境</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ② 核心の3つの違い -->
+<section>
+  <div class="section-title">核心の違い 3点</div>
+
+  <!-- 違い① -->
+  <div class="diff-block gap-block">
+    <div class="diff-header"><span class="num">1</span>目的が違う</div>
+    <div class="diff-col tai">
+      <h3>たい焼きタイム</h3>
+      <p>「次の最小作業へ進める」ことを最優先にします。「指導案を作って」という依頼には、授業の課題仮見立てを無理に挟まず、<strong>出力へ直行</strong>することも許容しています。実務の速さが設計の中心にあります。</p>
+    </div>
+    <div class="diff-col zan">
+      <h3>授業三昧</h3>
+      <p>成果物を急がず、まず「<strong>授業改善上のイシューは何か</strong>」を先に立てます。「指導案を作って」と言っても、ベースは止める側に働きます。手立てに飛ぶ前に、何が問題なのかを問い直すことが最優先です。</p>
+    </div>
+  </div>
+
+  <!-- 違い② -->
+  <div class="diff-block gap-block">
+    <div class="diff-header"><span class="num">2</span>授業観の埋め込み方が違う</div>
+    <div class="diff-col tai">
+      <h3>たい焼きタイム</h3>
+      <p>「学びの中心は子どものエージェンシー」という原則を基盤に持ちます。設計思想の土台ですが、<strong>特定の授業観に縛られない汎用的な構造</strong>です。異なる授業観・学校文化の教師でも使えます。</p>
+    </div>
+    <div class="diff-col zan">
+      <h3>授業三昧</h3>
+      <p>「子どもが情報に出会い、意味づけ、他者と関係づけ、言語活動を通して見方・考え方を再構成し、知的財産を獲得していく過程」という授業観が<strong>全ユニットに繰り返し刻まれています</strong>。特定の授業観への共鳴が前提です。</p>
+    </div>
+  </div>
+
+  <!-- 違い③ -->
+  <div class="diff-block gap-block">
+    <div class="diff-header"><span class="num">3</span>ユニット構成が違う</div>
+    <div class="diff-col tai">
+      <h3>たい焼きタイム にあって 授業三昧 にないもの</h3>
+      <p>
+        <strong>傾聴・対話ユニット</strong> — まだ困り感を言語化できていない段階でも「話を聞く」入口から始められる<br><br>
+        <strong>特別支援教育コア</strong> — 特別支援学級・通級・個別指導計画まで対応<br><br>
+        <strong>文体変換</strong> — 写真・データ整理と合わせて、語彙レベルの調整も担う
+      </p>
+    </div>
+    <div class="diff-col zan">
+      <h3>授業三昧 にあって たい焼きタイム にないもの</h3>
+      <p>
+        <strong>言語活動デザインユニット</strong> — 「話し合い・書く活動を活動名として置く」のではなく、「何の思考を動かすか」という機能として設計する専用ユニット<br><br>
+        <strong>子どもの意味づけの変化を時間軸で設計する概念</strong> — 「出会う→揺れる→外化する→再構成する→残す」という学びの弧の設計言語
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ③ 得意・不得意 -->
+<section>
+  <div class="section-title">得意なこと・不得手なこと</div>
+  <div class="sw-grid">
+
+    <div class="sw-card">
+      <div class="sw-card-head tai-str">✓ たい焼きタイムの得意なこと</div>
+      <ul class="sw-list">
+        <li><span class="icon">🟠</span>「まだ何が問題か分からない」段階から入れる（傾聴から始まる）</li>
+        <li><span class="icon">🟠</span>「指導案を作って」に素直に応じる</li>
+        <li><span class="icon">🟠</span>複数の授業案（たたき台A・B）を並べて提示できる</li>
+        <li><span class="icon">🟠</span>特別支援教育・通級・個別指導計画を扱える</li>
+        <li><span class="icon">🟠</span>異なる授業観の教師でも使える汎用性</li>
+        <li><span class="icon">🟠</span>他の先生に紹介・共有しやすい</li>
+      </ul>
+    </div>
+
+    <div class="sw-card">
+      <div class="sw-card-head tai-weak">△ たい焼きタイムの不得手なこと</div>
+      <ul class="sw-list">
+        <li><span class="icon">🔶</span>言語活動を「機能」として設計する（活動名を置くことにとどまりやすい）</li>
+        <li><span class="icon">🔶</span>学びの弧（単元全体を通じた意味づけの変化）を時間軸で設計する</li>
+        <li><span class="icon">🔶</span>「急がない」ための停止線が弱い（手立てへ早飛びしやすい）</li>
+        <li><span class="icon">🔶</span>話し合いが機能しない本質的な原因を掘り下げる</li>
+      </ul>
+    </div>
+
+    <div class="sw-card">
+      <div class="sw-card-head zan-str">✓ 授業三昧の得意なこと</div>
+      <ul class="sw-list">
+        <li><span class="icon">🔵</span>「何がおかしいのか」を手立てより先に問い直す</li>
+        <li><span class="icon">🔵</span>言語活動を「思考の機能」として設計する（書けなさも学びの入口として扱う）</li>
+        <li><span class="icon">🔵</span>単元全体の学びの弧を「意味づけの変化」で設計する</li>
+        <li><span class="icon">🔵</span>探究の問いを「立派なテーマに整えず」子どもの言葉から育てる</li>
+        <li><span class="icon">🔵</span>授業後の省察でイシューを再定式化する</li>
+        <li><span class="icon">🔵</span>設計がかたまった段階でキャラクター会議室で盲点を発見する</li>
+      </ul>
+    </div>
+
+    <div class="sw-card">
+      <div class="sw-card-head zan-weak">△ 授業三昧の不得手なこと</div>
+      <ul class="sw-list">
+        <li><span class="icon">🟦</span>急ぎの場面（明日の授業に間に合わせる等）</li>
+        <li><span class="icon">🟦</span>特別支援教育・通級への対応</li>
+        <li><span class="icon">🟦</span>「まだ語れない」段階の教師の話を聞くこと</li>
+        <li><span class="icon">🟦</span>特定の授業観に共鳴していない教師への汎用対応</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ④ どんな授業デザインに向くか -->
+<section>
+  <div class="section-title">どんな授業デザインに向くか</div>
+  <div class="surface">
+    <div class="usecase-table-wrap">
+      <table class="usecase-table">
+        <thead>
+          <tr>
+            <th>授業デザインの種類</th>
+            <th class="th-tai">たい焼きタイム</th>
+            <th class="th-zan">授業三昧</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>明日の一時間を急いで作りたい</td>
+            <td><span class="mark-best">◎</span></td>
+            <td><span class="mark-ng">△</span><br><span class="mark-note">止められる</span></td>
+          </tr>
+          <tr>
+            <td>単元全体の学びの弧を設計したい</td>
+            <td><span class="mark-ok">○</span></td>
+            <td><span class="mark-best">◎</span></td>
+          </tr>
+          <tr>
+            <td>既存の授業案を診断・見直したい</td>
+            <td><span class="mark-ok">○</span></td>
+            <td><span class="mark-best">◎</span><br><span class="mark-note">イシューを立て直す</span></td>
+          </tr>
+          <tr>
+            <td>発問を作りたい</td>
+            <td><span class="mark-ok">○</span></td>
+            <td><span class="mark-ok">○</span><br><span class="mark-note">先に意味づけの変化を問う</span></td>
+          </tr>
+          <tr>
+            <td>言語活動の質を問い直したい</td>
+            <td><span class="mark-ng">△</span></td>
+            <td><span class="mark-best">◎</span></td>
+          </tr>
+          <tr>
+            <td>話し合いが機能しない原因を探りたい</td>
+            <td><span class="mark-ok">○</span></td>
+            <td><span class="mark-best">◎</span></td>
+          </tr>
+          <tr>
+            <td>探究テーマを子どもと育てたい</td>
+            <td><span class="mark-ok">○</span></td>
+            <td><span class="mark-best">◎</span><br><span class="mark-note">粗い関心語を育てる</span></td>
+          </tr>
+          <tr>
+            <td>自由進度学習を設計したい</td>
+            <td><span class="mark-ok">○</span></td>
+            <td><span class="mark-ok">○</span></td>
+          </tr>
+          <tr>
+            <td>特別支援・通級対応を考えたい</td>
+            <td><span class="mark-best">◎</span></td>
+            <td><span class="mark-ng">△</span><br><span class="mark-note">通常学級のみ</span></td>
+          </tr>
+          <tr>
+            <td>生成AIを授業に入れる判断をしたい</td>
+            <td><span class="mark-ok">○</span></td>
+            <td><span class="mark-ok">○</span></td>
+          </tr>
+          <tr>
+            <td>何が問題か分からない段階から始めたい</td>
+            <td><span class="mark-best">◎</span><br><span class="mark-note">傾聴から入れる</span></td>
+            <td><span class="mark-ok">○</span><br><span class="mark-note">ベースが整理する</span></td>
+          </tr>
+          <tr>
+            <td>授業後に省察・振り返りをしたい</td>
+            <td><span class="mark-ok">○</span></td>
+            <td><span class="mark-best">◎</span><br><span class="mark-note">イシューを再定式化</span></td>
+          </tr>
+          <tr>
+            <td>他の先生に紹介・共有したい</td>
+            <td><span class="mark-best">◎</span></td>
+            <td><span class="mark-ng">△</span><br><span class="mark-note">個人の授業観が前提</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-sm muted" style="margin-top:14px;">◎ 特に向いている ／ ○ 対応できる ／ △ 不向き・別の手段を検討</p>
+  </div>
+</section>
+
+<!-- ⑤ どちらを使うか迷ったとき -->
+<section>
+  <div class="section-title">どちらを使うか迷ったとき</div>
+  <div class="decision-grid">
+
+    <div class="decision-card tai">
+      <h3>🟠 たい焼きタイムを選ぶ場面</h3>
+      <ul>
+        <li>時間がなく、今すぐ授業案が必要</li>
+        <li>まだ困り感を言葉にできていない</li>
+        <li>指導案・板書案・ワークシートなど特定の成果物がほしい</li>
+        <li>特別支援・通級が絡む</li>
+        <li>複数の案を並べて選びたい</li>
+        <li>他の先生と一緒に使いたい</li>
+      </ul>
+    </div>
+
+    <div class="decision-card zan">
+      <h3>🔵 授業三昧を選ぶ場面</h3>
+      <ul>
+        <li>「何がおかしいのか」を根本から問い直したい</li>
+        <li>話し合いが浅い・書けない子が多いなど構造的な問題がある</li>
+        <li>単元全体の設計を深く考えたい</li>
+        <li>総合・探究でテーマが育ちにくい</li>
+        <li>授業後に省察して次の設計に活かしたい</li>
+        <li>ある程度設計がかたまり、盲点を第三者視点で確認したい</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ⑥ 組み合わせて使う -->
+<section>
+  <div class="section-title">組み合わせて使う</div>
+  <div class="combo-box">
+    <h3>対立するツールではなく、用途に応じて使い分けるツールです</h3>
+
+    <div style="margin-bottom: 20px;">
+      <div class="combo-flow">
+        <span class="combo-tag tai">たい焼きタイム</span>
+        <span class="combo-arrow">→</span>
+        <span class="combo-tag zan">授業三昧</span>
+      </div>
+      <div class="combo-desc">たい焼きタイムでたたき台を作り、授業三昧で「子どもの意味づけの変化」の観点から問い直す。スピードと深さを分担する使い方。</div>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+      <div class="combo-flow">
+        <span class="combo-tag zan">授業三昧</span>
+        <span class="combo-arrow">→</span>
+        <span class="combo-tag tai">たい焼きタイム</span>
+      </div>
+      <div class="combo-desc">授業三昧で単元の核と学びの弧を設計し、たい焼きタイムで指導案・板書案を実務的に仕上げる。設計と成果物化を分担する使い方。</div>
+    </div>
+
+    <div>
+      <div class="combo-flow">
+        <span class="combo-tag tai">たい焼きタイム</span>
+        <span class="combo-arrow">日常の授業</span>
+        <span class="combo-tag zan">授業三昧</span>
+        <span class="combo-arrow">単元研究・省察</span>
+      </div>
+      <div class="combo-desc">日常の授業改善はたい焼きタイム、単元設計・授業研究・省察は授業三昧と場面で使い分ける。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑦ まとめ -->
+<section>
+  <div class="section-title">まとめ</div>
+  <div class="surface">
+    <div class="diff-grid" style="display:grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+      <div>
+        <p style="font-size:.8rem; font-weight:700; color:var(--tai); letter-spacing:.08em; margin-bottom:8px;">🟠 たい焼きタイム</p>
+        <p style="font-size:.95rem; line-height:1.8;">汎用的な授業改善プロセス支援ツール。誰でも使えて、どんな出力にも対応できる。<strong>「何かを作る」ためのツール。</strong></p>
+      </div>
+      <div>
+        <p style="font-size:.8rem; font-weight:700; color:var(--zan); letter-spacing:.08em; margin-bottom:8px;">🔵 授業三昧</p>
+        <p style="font-size:.95rem; line-height:1.8;">特定の授業観（子どもの意味づけの変化）を軸にした個人R&D環境。急がず・深く・問い直す。<strong>「授業を問い直す」ための環境。</strong></p>
+      </div>
+    </div>
+    @media (max-width: 620px) { .diff-grid { grid-template-columns: 1fr !important; } }
+    <hr style="border:none; border-top:1px solid var(--border); margin:20px 0;">
+    <p style="text-align:center; font-size:.95rem; color:var(--muted);">
+      どちらが優れているではなく、<strong style="color:var(--text)">何をしたいかで選ぶ</strong>ツールです。
+    </p>
+  </div>
+</section>
+
+</div><!-- /wrapper -->
+
+<footer>
+  授業改善AIシステム比較ガイド ／ 2026-04-30
+</footer>
+
+</body>
+</html>
