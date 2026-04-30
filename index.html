@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>授業三昧 使い方マニュアル</title>
+  <style>
+    :root {
+      --accent:    #2e6fdb;
+      --accent-lt: #e8f0fc;
+      --core:      #1b7f4e;
+      --core-lt:   #e6f5ee;
+      --warn:      #b45309;
+      --warn-lt:   #fef3c7;
+      --char:      #7c3aed;
+      --char-lt:   #f3eeff;
+      --bg:        #f8f9fb;
+      --surface:   #ffffff;
+      --border:    #d1d5db;
+      --text:      #1a1a2e;
+      --muted:     #6b7280;
+      --radius:    10px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: linear-gradient(135deg, #1e3a6e 0%, #2e6fdb 100%);
+      color: #fff;
+      padding: 48px 32px 36px;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: .04em;
+      margin-bottom: 8px;
+    }
+    header .version {
+      font-size: .85rem;
+      opacity: .75;
+    }
+    header .tagline {
+      margin-top: 14px;
+      font-size: 1rem;
+      opacity: .9;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ── LAYOUT ── */
+    .wrapper {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px 36px;
+      margin-bottom: 28px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.05);
+    }
+
+    h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--accent);
+      border-left: 4px solid var(--accent);
+      padding-left: 12px;
+      margin-bottom: 20px;
+    }
+
+    h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 22px 0 10px;
+      color: var(--text);
+    }
+
+    p { margin-bottom: 12px; }
+
+    strong { font-weight: 700; }
+
+    ul, ol {
+      padding-left: 1.4em;
+      margin-bottom: 12px;
+    }
+    li { margin-bottom: 5px; }
+
+    /* ── INTRO BOX ── */
+    .intro-box {
+      background: var(--accent-lt);
+      border-left: 4px solid var(--accent);
+      border-radius: 6px;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+      font-size: .95rem;
+    }
+
+    /* ── CORE NOTICE ── */
+    .core-badge {
+      display: inline-block;
+      background: var(--core);
+      color: #fff;
+      font-size: .75rem;
+      font-weight: 700;
+      border-radius: 4px;
+      padding: 2px 8px;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+
+    .core-box {
+      background: var(--core-lt);
+      border-left: 4px solid var(--core);
+      border-radius: 6px;
+      padding: 14px 18px;
+      margin: 12px 0;
+      font-size: .92rem;
+    }
+
+    /* ── ARCHITECTURE DIAGRAM ── */
+    .arch {
+      background: #1a1a2e;
+      color: #e2e8f0;
+      border-radius: 8px;
+      padding: 24px 20px;
+      font-family: "Courier New", "Consolas", monospace;
+      font-size: .82rem;
+      line-height: 1.9;
+      overflow-x: auto;
+      margin: 16px 0;
+    }
+    .arch .hub   { color: #60a5fa; font-weight: 700; }
+    .arch .core  { color: #34d399; font-weight: 700; }
+    .arch .arrow { color: #94a3b8; }
+    .arch .unit  { color: #fbbf24; }
+    .arch .opt   { color: #c084fc; }
+
+    /* ── UNIT TABLE ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: .9rem;
+    }
+    th {
+      background: var(--accent);
+      color: #fff;
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 600;
+    }
+    td {
+      padding: 9px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    tr:nth-child(even) td { background: #f9fafb; }
+
+    /* row coloring by layer */
+    tr.row-hub td  { background: #eff6ff; }
+    tr.row-core td { background: #ecfdf5; }
+    tr.row-char td { background: #f5f3ff; }
+
+    /* ── STEPS ── */
+    .steps { counter-reset: step; }
+    .step-item {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .step-num {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: .95rem;
+      margin-top: 2px;
+    }
+    .step-body { flex: 1; }
+    .step-body h3 { margin-top: 0; color: var(--accent); }
+
+    /* ── QUOTE ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      background: var(--accent-lt);
+      border-radius: 0 6px 6px 0;
+      padding: 12px 18px;
+      margin: 12px 0;
+      font-size: .92rem;
+      color: #334155;
+    }
+
+    /* ── FLOW CARD ── */
+    .flow-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .flow-card-header {
+      background: #f1f5f9;
+      border-bottom: 1px solid var(--border);
+      padding: 12px 20px;
+      font-weight: 700;
+      font-size: .95rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .flow-card-header .tag {
+      background: var(--accent);
+      color: #fff;
+      font-size: .72rem;
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-weight: 600;
+    }
+    .flow-card-body { padding: 20px; }
+    .concern-label {
+      font-size: .8rem;
+      font-weight: 700;
+      color: var(--warn);
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      margin-bottom: 4px;
+    }
+    .concern-text {
+      background: var(--warn-lt);
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin-bottom: 14px;
+      font-size: .9rem;
+    }
+
+    /* ── CODE / FLOW PIPE ── */
+    .flow-pipe {
+      background: #f1f5f9;
+      border-radius: 6px;
+      padding: 10px 16px;
+      font-family: "Courier New", monospace;
+      font-size: .85rem;
+      color: #334155;
+      margin-bottom: 14px;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .flow-pipe .pipe-hub  { color: #2563eb; font-weight: 700; }
+    .flow-pipe .pipe-core { color: #059669; font-weight: 700; }
+    .flow-pipe .pipe-unit { color: #d97706; font-weight: 700; }
+    .flow-pipe .pipe-out  { color: #7c3aed; font-weight: 700; }
+
+    /* ── CHARACTER TABLE ── */
+    .char-table td:first-child {
+      font-weight: 700;
+      color: var(--char);
+      white-space: nowrap;
+    }
+
+    /* ── TIMING BOX ── */
+    .timing-box {
+      background: var(--char-lt);
+      border: 1.5px solid var(--char);
+      border-radius: 8px;
+      padding: 18px 22px;
+      margin: 16px 0;
+    }
+    .timing-box .timing-label {
+      font-size: .78rem;
+      font-weight: 700;
+      color: var(--char);
+      letter-spacing: .06em;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+    .timing-box p { margin-bottom: 0; font-size: .95rem; }
+
+    /* ── WARNING BOX ── */
+    .warn-box {
+      background: var(--warn-lt);
+      border-left: 4px solid var(--warn);
+      border-radius: 6px;
+      padding: 14px 18px;
+      margin: 14px 0;
+      font-size: .92rem;
+    }
+
+    /* ── WRONG / RIGHT TABLE ── */
+    .wr-table th:first-child  { background: #dc2626; }
+    .wr-table th:last-child   { background: var(--core); }
+    .wr-table td:first-child  { background: #fff5f5; color: #7f1d1d; }
+    .wr-table td:last-child   { background: var(--core-lt); color: #14532d; }
+
+    /* ── START BOX ── */
+    .start-box {
+      background: linear-gradient(135deg, #1e3a6e 0%, #2e6fdb 100%);
+      color: #fff;
+      border-radius: 10px;
+      padding: 28px 32px;
+      text-align: center;
+    }
+    .start-box h2 {
+      color: #fff;
+      border-color: rgba(255,255,255,.5);
+      margin-bottom: 16px;
+    }
+    .start-box .sample-list {
+      list-style: none;
+      padding: 0;
+      text-align: left;
+      display: inline-block;
+      margin: 0 auto 18px;
+    }
+    .start-box .sample-list li {
+      background: rgba(255,255,255,.12);
+      border-radius: 6px;
+      padding: 8px 16px;
+      margin-bottom: 8px;
+      font-size: .92rem;
+    }
+    .start-box .sample-list li::before { content: "▸ "; }
+    .start-box .note {
+      font-size: .88rem;
+      opacity: .85;
+    }
+
+    /* ── CODE SNIPPET ── */
+    code {
+      background: #f1f5f9;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-size: .85em;
+      font-family: "Courier New", monospace;
+    }
+    pre {
+      background: #f1f5f9;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 14px 18px;
+      overflow-x: auto;
+      font-size: .85rem;
+      margin: 10px 0;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: .8rem;
+      padding: 24px 0;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      section { padding: 22px 18px; }
+      header h1 { font-size: 1.5rem; }
+      .arch { font-size: .72rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ======================== HEADER ======================== -->
+<header>
+  <h1>授業三昧 使い方マニュアル</h1>
+  <div class="version">ver.1.0 ／ 2026-04-30</div>
+  <p class="tagline">教師の語り・願い・困り感を受け取り、授業改善の思考を深める個人R&amp;D環境</p>
+</header>
+
+<div class="wrapper">
+
+<!-- ======================== WHAT IS ======================== -->
+<section>
+  <h2>授業三昧とは何か</h2>
+
+  <div class="intro-box">
+    授業三昧は、教師が自分の授業を改善するための<strong>個人R&amp;D環境</strong>です。<br>
+    授業案を自動生成するツールではありません。
+  </div>
+
+  <p>「どう教えるか」を考える前に、<strong>「子どもは何に出会い、どこで考えが動き、何を次の学びに持ち出すのか」</strong>を問う環境です。</p>
+
+  <p>授業三昧を使い始めるのに、完成した授業案も正確な情報も必要ありません。</p>
+
+  <div class="intro-box">
+    <strong>「なんか子どもが乗ってこない」「話し合いが浅い」「書けない子が多い」</strong><br>
+    ——そういう困り感や実感で十分です。
+  </div>
+</section>
+
+<!-- ======================== ARCHITECTURE ======================== -->
+<section>
+  <h2>全体構成：ハブとユニット</h2>
+
+  <p>授業三昧は<strong>1つのハブ</strong>（⓪ ベース）と<strong>複数のユニット</strong>で構成されています。</p>
+
+  <div class="arch">
+<span class="hub">⓪ ベース（ハブ）</span>
+<span class="arrow">        ↓</span>
+<span class="core">① 授業改善コア</span> <span class="arrow">←─────────────── すべての道はここへ戻る</span>
+<span class="arrow">     ↕</span>
+<span class="unit">② 学習タイプ</span>    <span class="unit">③ 入力支援</span>         <span class="unit">④ 活動設計</span>          <span class="unit">⑤ 出力</span>
+<span class="unit"> 探究コア          Web検索・ICT        言語活動デザイン      指導案デザイン</span>
+<span class="unit"> 個別最適化コア     写真・作品・データ   生成AI授業活用        板書デザイン</span>
+<span class="unit"> 自由進度コア</span>
+<span class="opt">                                                          ⑥ 任意起動</span>
+<span class="opt">                                                          キャラクター会議室</span>
+  </div>
+
+  <h3>⓪ ハブ（ベース）</h3>
+  <p>教師の語りを受け取り、<strong>「教師の願い・子どもの事実・教師の解釈・困り感・出力目的」を分け</strong>、授業改善コアへ渡せる状態に整える入口です。ベース自身は授業を作りません。</p>
+  <p><strong>→ まずここに話しかけてください。</strong></p>
+
+  <h3>① コア（授業改善コア）</h3>
+  <div class="core-box">
+    <span class="core-badge">中心</span>
+    授業改善の中心判断を担うユニット。「この一時間で子どもは何に出会うのか」「どこで意味づけが揺れるのか」「何が次の学びの知的財産として残るのか」を軸に設計します。<strong>どのユニットを使っても、最終的にはここへ戻ります。</strong>
+  </div>
+
+  <h3>② 〜 ⑤ ユニット群</h3>
+  <p>特定の検討に特化した補助ユニットです。授業改善コアと組み合わせて使います。コアの代わりにはなりません。</p>
+
+  <h3>⑥ キャラクター会議室</h3>
+  <p>ユーザーが明示的に起動したときのみ使える任意ユニット。複数の視点から授業の盲点を見つけます。<a href="#char-room" style="color:var(--char)">→ 詳しくは後述</a></p>
+</section>
+
+<!-- ======================== UNIT LIST ======================== -->
+<section>
+  <h2>各ユニットの一覧</h2>
+  <table>
+    <thead>
+      <tr><th>番号</th><th>ユニット名</th><th>何をするユニットか</th></tr>
+    </thead>
+    <tbody>
+      <tr class="row-hub">
+        <td>⓪</td>
+        <td><strong>ベース</strong></td>
+        <td>教師の語りを整理し、授業改善コアへ渡す入口</td>
+      </tr>
+      <tr class="row-core">
+        <td>①</td>
+        <td><strong>授業改善コア</strong></td>
+        <td>子どもの意味づけの変化を軸に授業を設計する中心</td>
+      </tr>
+      <tr>
+        <td>②</td>
+        <td><strong>探究コア</strong></td>
+        <td>子どもの粗い関心語・違和感を追究可能な問いへ育てる</td>
+      </tr>
+      <tr>
+        <td>②</td>
+        <td><strong>個別最適化コア</strong></td>
+        <td>参加しにくい子の入口を増やす（活動を薄めるのではなく）</td>
+      </tr>
+      <tr>
+        <td>②</td>
+        <td><strong>自由進度コア</strong></td>
+        <td>子どもの自己調整・立ち止まり・再計画を設計する</td>
+      </tr>
+      <tr>
+        <td>③</td>
+        <td><strong>Web検索・ICT情報教育</strong></td>
+        <td>学習指導要領・文科省資料・実践例などの外部教育知を整理する</td>
+      </tr>
+      <tr>
+        <td>③</td>
+        <td><strong>写真・作品・データ入力支援</strong></td>
+        <td>ノート写真・作品・発言メモなどを授業改善の材料へ整理する</td>
+      </tr>
+      <tr>
+        <td>④</td>
+        <td><strong>生成AI授業活用</strong></td>
+        <td>GeminiやNotebookLMを「どこに・何のために」使うかを検討する</td>
+      </tr>
+      <tr>
+        <td>④</td>
+        <td><strong>言語活動デザイン</strong></td>
+        <td>書く・話す・つなぐ活動を子どもの思考が動く機能として設計する</td>
+      </tr>
+      <tr>
+        <td>⑤</td>
+        <td><strong>指導案デザイン</strong></td>
+        <td>授業改善コアの設計を指導案形式に落とし込む</td>
+      </tr>
+      <tr>
+        <td>⑤</td>
+        <td><strong>板書デザイン</strong></td>
+        <td>子どもの言葉の変化を受け止める板書の仮配置を設計する</td>
+      </tr>
+      <tr class="row-char">
+        <td>⑥</td>
+        <td><strong>キャラクター会議室</strong></td>
+        <td>複数視点（ダイヤ・ジュニア・スペード等）で授業の無理を見つける</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ======================== HOW TO USE ======================== -->
+<section>
+  <h2>基本的な使い方</h2>
+  <div class="steps">
+
+    <div class="step-item">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>ベースに語りかける</h3>
+        <p>完成した情報は不要です。次のような話しかけ方で始めてください。</p>
+        <blockquote>「3年生の社会で、『はたらく人』の単元です。子どもたちがスーパーの人にインタビューをしたんですが、メモを写すだけで終わってしまって、自分の言葉で振り返りが書けない子が多いです。どうしたらいいでしょう」</blockquote>
+        <p>ベースはこの語りから以下を分けます。</p>
+        <ul>
+          <li><strong>教師の願い</strong>：子どもに調べたことを自分の言葉にしてほしい</li>
+          <li><strong>子どもの事実</strong>：メモを写すだけで終わる、振り返りが書けない子が多い</li>
+          <li><strong>困り感</strong>：言語活動（振り返り）が機能していない</li>
+          <li><strong>出力目的</strong>：改善案がほしい</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step-item">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>授業改善コアで検討する</h3>
+        <p>ベースが整理した材料をもとに、授業改善コアが「子どもの意味づけの変化」を軸に検討します。</p>
+        <blockquote>「子どもはどこでメモ写しに止まったのか」「友達との関係づけが弱かったのか」「振り返りの足場が重すぎたのか」</blockquote>
+        <div class="core-box">
+          <strong>手立てではなく、授業改善上のイシューから入ります。</strong><br>
+          「どうすればよかった？」より先に「何が機能していなかったのか？」を問います。
+        </div>
+      </div>
+    </div>
+
+    <div class="step-item">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>必要なユニットを接続する</h3>
+        <ul>
+          <li>「振り返りが書けない子が多い」→ <strong>言語活動デザイン</strong> を接続して書く活動の足場を設計する</li>
+          <li>「書くことへの抵抗が強い子がいる」→ <strong>個別最適化コア</strong> を接続して参加の入口を増やす</li>
+        </ul>
+        <p>ユニットは検討後、<strong>必ず授業改善コアへ戻します。</strong></p>
+      </div>
+    </div>
+
+    <div class="step-item">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h3>出力ユニットへ進む（必要な場合）</h3>
+        <p>指導案や板書案が必要な場合は、<strong>指導案デザイン</strong>・<strong>板書デザイン</strong>へ接続します。</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ======================== EXAMPLES ======================== -->
+<section>
+  <h2>組み合わせ例</h2>
+
+  <!-- 例1 -->
+  <div class="flow-card">
+    <div class="flow-card-header">
+      <span class="tag">例 1</span>
+      国語「物語文の読み」で話し合いが浅い
+    </div>
+    <div class="flow-card-body">
+      <div class="concern-label">困り感</div>
+      <div class="concern-text">4年生の国語で、登場人物の気持ちを話し合わせると「かわいそうだと思います」で止まる。本文に戻らない。根拠のない感想交換になっている。</div>
+
+      <div class="flow-pipe">
+        <span class="pipe-hub">ベース</span> → <span class="pipe-core">授業改善コア</span> → <span class="pipe-unit">言語活動デザイン</span> → <span class="pipe-out">板書デザイン</span>
+      </div>
+
+      <p><strong>授業改善コア</strong>で検討すること：</p>
+      <ul>
+        <li>「かわいそう」という言葉は、どの場面・どの言葉から出てきているか</li>
+        <li>子どもは本文のどの語句に出会っているか</li>
+        <li>意味づけが揺れる「ズレ」が授業内にあるか</li>
+      </ul>
+
+      <p><strong>言語活動デザイン</strong>で設計すること：</p>
+      <ul>
+        <li>「本文のどの言葉からそう思った？」という問い返しの場面</li>
+        <li>友の根拠と自分の根拠を比べる活動</li>
+        <li>友の言葉を借りて一文だけ言い直す場面</li>
+      </ul>
+
+      <p><strong>板書デザイン</strong>で設計すること：</p>
+      <ul>
+        <li>子どもの言いかけや粗い言葉をそのまま置く余白</li>
+        <li>本文の語句と子どもの解釈をつなぐ配置</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 例2 -->
+  <div class="flow-card">
+    <div class="flow-card-header">
+      <span class="tag">例 2</span>
+      総合的な学習でテーマが決まらない
+    </div>
+    <div class="flow-card-body">
+      <div class="concern-label">困り感</div>
+      <div class="concern-text">5年生の総合で、子どものアイデアが多すぎて探究テーマが絞れない。教師がまとめてしまうと「先生が決めた」になる。</div>
+
+      <div class="flow-pipe">
+        <span class="pipe-hub">ベース</span> → <span class="pipe-core">授業改善コア</span> → <span class="pipe-unit">探究コア</span> → <span class="pipe-core">授業改善コア（戻る）</span>
+      </div>
+
+      <p><strong>探究コア</strong>で検討すること：</p>
+      <ul>
+        <li>「環境」「池」「生き物」「きれいにしたい」などの粗い言葉をそのまま受け取る</li>
+        <li>子どもの関心語の背景にある生活経験・違和感・願いを読む</li>
+        <li>立派なテーマ名に早く整えない（「生物多様性の保全」等への変換は禁止）</li>
+        <li>問いへ育つ前に活動計画を固定しない</li>
+      </ul>
+
+      <p><strong>授業改善コアへ戻すとき：</strong></p>
+      <ul>
+        <li>子どもが自分でテーマを絞るための「分類・比べる・問いにする」言語活動を設計する</li>
+        <li>テーマ決定の授業を「子どもの意味づけの変化」として時間軸で設計する</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 例3 -->
+  <div class="flow-card">
+    <div class="flow-card-header">
+      <span class="tag">例 3</span>
+      自由進度学習を取り入れたいが進め方が分からない
+    </div>
+    <div class="flow-card-body">
+      <div class="concern-label">困り感</div>
+      <div class="concern-text">算数で自由進度を試みたが、速い子が暇になり、遅い子は放置された感じになった。</div>
+
+      <div class="flow-pipe">
+        <span class="pipe-hub">ベース</span> → <span class="pipe-core">授業改善コア</span> → <span class="pipe-unit">自由進度コア</span> → <span class="pipe-core">授業改善コア（戻る）</span> → <span class="pipe-out">指導案デザイン</span>
+      </div>
+
+      <p><strong>自由進度コア</strong>で検討すること：</p>
+      <ul>
+        <li>「どこを自由進度化するか・してはいけないか」を分ける（教材との初めての出会いは一斉が基本）</li>
+        <li>必須課題・選択課題・発展課題を分ける（速さ競争にしない）</li>
+        <li>「立ち止まりポイント」を設計する（進むより立ち止まることが大事）</li>
+        <li>速い子の「深め方」と遅い子への支援を別々に設計する</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 例4 -->
+  <div class="flow-card">
+    <div class="flow-card-header">
+      <span class="tag">例 4</span>
+      子どものノート写真・作品を持っている
+    </div>
+    <div class="flow-card-body">
+      <div class="concern-label">状況</div>
+      <div class="concern-text">授業後のノート写真がある。子どもが何を書いたか見てもらいたい。</div>
+
+      <div class="flow-pipe">
+        <span class="pipe-unit">写真・作品・データ入力支援</span> → <span class="pipe-core">授業改善コア</span> → 次の授業の設計
+      </div>
+
+      <p><strong>写真・作品・データ入力支援</strong>が行うこと：</p>
+      <ul>
+        <li>ノートに書かれた内容から「見えている事実」「教師の解釈の仮説」「次に見るべき点」を分ける</li>
+        <li>データや作品だけで子どもの理解を断定しない</li>
+        <li>整理した材料を授業改善コアへ渡す</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 例5 -->
+  <div class="flow-card">
+    <div class="flow-card-header">
+      <span class="tag">例 5</span>
+      生成AIを授業に入れたい
+    </div>
+    <div class="flow-card-body">
+      <div class="concern-label">状況</div>
+      <div class="concern-text">GeminiかNotebookLMを国語の授業に使いたい。でも何のために使うのかが曖昧。</div>
+
+      <div class="flow-pipe">
+        <span class="pipe-hub">ベース</span> → <span class="pipe-core">授業改善コア</span> → <span class="pipe-unit">生成AI授業活用</span> → <span class="pipe-core">授業改善コア（戻る）</span>
+      </div>
+
+      <p><strong>生成AI授業活用</strong>で検討すること：</p>
+      <ul>
+        <li>「AIを入れることで子どもの思考のどこが広がり、どこが弱まるか」</li>
+        <li>子どもが直接使えるAI（Gemini・NotebookLM）と教師準備用AI（Claude・ChatGPT）を区別する</li>
+        <li>「AIが考えてしまう場面」と「子どもが自分で考える場面」を分ける</li>
+        <li>AI出力を児童の思考の完成形として扱わない</li>
+      </ul>
+
+      <p><strong>授業改善コアへ戻るとき：</strong></p>
+      <ul>
+        <li>AI活用が授業の核を奪っていないかを確認する</li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+
+<!-- ======================== CHARACTER ROOM ======================== -->
+<section id="char-room">
+  <h2>キャラクター会議室の使い方</h2>
+
+  <p>授業の設計に複数の視点を入れたいときに使う、<strong style="color:var(--char)">任意起動の多視点検討ユニット</strong>です。</p>
+
+  <h3>参加キャラクター</h3>
+  <table class="char-table">
+    <thead>
+      <tr><th>キャラクター</th><th>役割</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>♦ ダイヤ</td>
+        <td>授業の核・本質・イシューを見る</td>
+      </tr>
+      <tr>
+        <td>👦 ジュニア</td>
+        <td>対象学年の子どもの側から見る（教師に都合のいい児童役ではない）</td>
+      </tr>
+      <tr>
+        <td>♠ スペード</td>
+        <td>批判・リスク・論理の穴を見る</td>
+      </tr>
+      <tr>
+        <td>♥ ハート</td>
+        <td>安心・関係性・参加の気持ちを見る</td>
+      </tr>
+      <tr>
+        <td>♣ クラブ</td>
+        <td>活動・手順・実行可能性を見る</td>
+      </tr>
+      <tr>
+        <td>J ジャック</td>
+        <td>個別最適化・参加保障・多様な子の入口を見る</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>使うタイミング —— これが最も重要</h3>
+
+  <div class="timing-box">
+    <div class="timing-label">✔ キャラクター会議室を投入すべきタイミング</div>
+    <p><strong>指導デザインがある程度かたまった段階</strong>で投入してください。<br>
+    授業の核・子どもの意味づけの変化・言語活動の概要が見えてきた段階が最適です。</p>
+  </div>
+
+  <div class="warn-box">
+    <strong>⚠ まだ方向性が全く見えていない段階で使うと</strong>、会議が雑談に流れ、授業の核がない状態で多視点だけが増えるため、かえって混乱します。
+  </div>
+
+  <h3>キャラクター会議室の「よさ」が最大に発揮される場面</h3>
+
+  <blockquote>
+    授業改善コアで「この一時間の核」と「子どもの意味づけが動く場面」の見立てがほぼ決まった。発問案も仮に置いた。でも、「本当に子どもに届くか」「実行可能か」が不安——<strong>そのとき。</strong>
+  </blockquote>
+
+  <p>この状態でキャラクター会議室を起動すると：</p>
+  <ul>
+    <li><strong>ジュニア</strong>が「その発問、子どもはたぶんこう受け取る」「いきなり書くのはきつい」と教師の盲点を突く</li>
+    <li><strong>スペード</strong>が「この場面で時間が足りなくなる」「前提が甘い」と構造の弱点を指摘する</li>
+    <li><strong>クラブ</strong>が「手順が曖昧でどこに書けばいいか分からない」と実行面の問題を見つける</li>
+    <li><strong>ハート</strong>が「不安が強い子はここで閉じる」と参加の問題を見つける</li>
+  </ul>
+  <p>→ <strong>授業者が気づけなかった実装上の問題を、複数視点から一気に見つけられます。</strong></p>
+
+  <h3>起動の仕方</h3>
+  <p>次のように<strong>明示的に</strong>呼んでください。ユニットが自動で起動することはありません。</p>
+  <pre>「キャラクター会議室を起動して、この発問案を検討して」
+「ダイヤ・ジュニア・スペードで話し合って」
+「ジュニアを呼んで、この活動に子どもが入れるか見て」
+「2周会議で授業の弱点を見つけて」</pre>
+
+  <h3>会議後の確認</h3>
+  <div class="core-box">
+    キャラクター会議室の結果は最終案ではありません。必ず<strong>授業改善コアへ戻し</strong>、「子どもの意味づけの変化が見えるか」で判断します。
+  </div>
+</section>
+
+<!-- ======================== DO / DON'T ======================== -->
+<section>
+  <h2>よくある誤った使い方</h2>
+  <table class="wr-table">
+    <thead>
+      <tr><th>✗ 誤った使い方</th><th>✓ 正しい方向</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>最初から「指導案を作って」と言う</td>
+        <td>まずベースに困り感を語る</td>
+      </tr>
+      <tr>
+        <td>完成した授業案を渡して「どこが悪いか教えて」</td>
+        <td>子どもの事実・困り感・教師の願いを伝える</td>
+      </tr>
+      <tr>
+        <td>手立てをすぐ求める</td>
+        <td>授業改善上のイシューを先に見る</td>
+      </tr>
+      <tr>
+        <td>キャラクター会議室を何も決まっていない段階で呼ぶ</td>
+        <td>コアで核が見えてから呼ぶ</td>
+      </tr>
+      <tr>
+        <td>ユニットを同時にいくつも起動する</td>
+        <td>1つずつ接続し、必ずコアへ戻る</td>
+      </tr>
+      <tr>
+        <td>Web検索の結果を授業の答えにする</td>
+        <td>外部知は材料。核はコアで判断する</td>
+      </tr>
+      <tr>
+        <td>AI出力を子どもの考えの完成形として扱う</td>
+        <td>子どもが自分の言葉へ戻す場面を設計する</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ======================== START ======================== -->
+<section class="start-box">
+  <h2>最初の一言</h2>
+  <p style="margin-bottom:18px; opacity:.9;">次のどれかで話しかけてください。ベースが受け取り、授業改善コアへつなぎます。</p>
+  <ul class="sample-list">
+    <li>「○年生の○科で、□□という単元です。△△で困っています。」</li>
+    <li>「こんな子どもの姿がありました。（具体的な発言・様子・ノートなど）」</li>
+    <li>「この授業案を見てほしい。子どもに届くか不安です。」</li>
+    <li>「▲▲という教材を使いたいけど、どこから始めればいいか分かりません。」</li>
+  </ul>
+  <p class="note">完璧な情報は必要ありません。<strong>あなたの教室の子どもの事実と、あなたの願いがあれば始められます。</strong></p>
+</section>
+
+</div><!-- /wrapper -->
+
+<footer>
+  授業三昧 ver.1 ／ ⓪ベース〜⑥キャラクター会議室
+</footer>
+
+</body>
+</html>
