@@ -7,6 +7,7 @@
 <style>
 /* ── リセット & ベース ─────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 :root {
   --navy:  #1B2A4A;
   --blue:  #2E86DE;
@@ -89,11 +90,19 @@ section:nth-child(even):not(.cover) { background: #FAFBFC; }
   gap: 10px; margin-bottom: 44px;
 }
 .cover-check {
+  display: block;
   background: rgba(255,255,255,.07);
   border: 1px solid rgba(255,255,255,.12);
   border-radius: 8px;
   padding: 12px 16px;
   color: #D6EAF8; font-size: 14px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+.cover-check:hover {
+  background: rgba(255,255,255,.15);
+  border-color: rgba(255,255,255,.3);
 }
 .cover-check::before { content: "✅ "; }
 .cover-version {
@@ -597,12 +606,12 @@ section:nth-child(even):not(.cover) { background: #FAFBFC; }
   <div class="cover-bar"></div>
   <p class="cover-tagline">AIが苦手でも大丈夫。授業づくりの相談相手として使える。</p>
   <div class="cover-checklist">
-    <div class="cover-check">ユニットの分類（必須＋7分類）</div>
-    <div class="cover-check">ChatGPTでの始め方（操作手順）</div>
-    <div class="cover-check">使用フロー（5ステップ）</div>
-    <div class="cover-check">全19ユニットの解説</div>
-    <div class="cover-check">10キャラクターへの話しかけ方</div>
-    <div class="cover-check">代表的な使い方15例</div>
+    <a class="cover-check" href="#sec-classify">ユニットの分類（必須＋7分類）</a>
+    <a class="cover-check" href="#sec-setup">ChatGPTでの始め方（操作手順）</a>
+    <a class="cover-check" href="#sec-flow">使用フロー（5ステップ）</a>
+    <a class="cover-check" href="#sec-units">全19ユニットの解説</a>
+    <a class="cover-check" href="#sec-characters">10キャラクターへの話しかけ方</a>
+    <a class="cover-check" href="#sec-cases">代表的な使い方15例</a>
   </div>
   <p class="cover-version">ver.1.5 ／ 2026年6月</p>
 </section>
@@ -646,7 +655,7 @@ section:nth-child(even):not(.cover) { background: #FAFBFC; }
 </section>
 
 <!-- ══════════════════════════ ユニットの分類 ══════════════════════ -->
-<section>
+<section id="sec-classify">
   <div class="sec-header">
     <div class="sec-num">1</div>
     <h2 class="sec-title">ユニットの分類</h2>
@@ -786,7 +795,7 @@ section:nth-child(even):not(.cover) { background: #FAFBFC; }
 </section>
 
 <!-- ══════════════════════════ ChatGPTでの始め方 ══════════════════════ -->
-<section>
+<section id="sec-setup">
   <div class="sec-header">
     <div class="sec-num">2</div>
     <h2 class="sec-title">ChatGPTでの始め方</h2>
@@ -866,7 +875,7 @@ section:nth-child(even):not(.cover) { background: #FAFBFC; }
 </section>
 
 <!-- ══════════════════════════ 使用フロー ══════════════════════ -->
-<section>
+<section id="sec-flow">
   <div class="sec-header">
     <div class="sec-num">3</div>
     <h2 class="sec-title">使用フロー（会話が始まったあと）</h2>
@@ -945,7 +954,7 @@ section:nth-child(even):not(.cover) { background: #FAFBFC; }
 </section>
 
 <!-- ══════════════════════════ ユニット ══════════════════════ -->
-<section>
+<section id="sec-units">
   <div class="sec-header">
     <div class="sec-num">4</div>
     <h2 class="sec-title">各ユニットでできること</h2>
@@ -1182,7 +1191,7 @@ section:nth-child(even):not(.cover) { background: #FAFBFC; }
 </section>
 
 <!-- ══════════════════════════ キャラクター ══════════════════ -->
-<section>
+<section id="sec-characters">
   <div class="sec-header">
     <div class="sec-num">5</div>
     <h2 class="sec-title">10キャラクターへの話しかけ方</h2>
@@ -1249,7 +1258,7 @@ section:nth-child(even):not(.cover) { background: #FAFBFC; }
 </section>
 
 <!-- ══════════════════════════ 対話事例 ══════════════════════ -->
-<section>
+<section id="sec-cases">
   <div class="sec-header">
     <div class="sec-num">6</div>
     <h2 class="sec-title">代表的な使い方15例</h2>
