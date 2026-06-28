@@ -55,7 +55,7 @@
     transition: transform .35s ease;
   }
   .page {
-    flex: 0 0 100vw;
+    flex: 0 0 auto;
     height: 100%;
     display: flex; align-items: center; justify-content: center;
     padding: 12px;
@@ -157,9 +157,20 @@
     dotsWrap.appendChild(dot);
   }
   const dots = Array.from(dotsWrap.children);
+  const pages = Array.from(document.querySelectorAll('.page'));
+
+  function layout() {
+    const w = viewer.clientWidth;
+    pages.forEach(p => { p.style.width = w + 'px'; });
+    track.style.transition = 'none';
+    track.style.transform = `translateX(${-current * w}px)`;
+    // re-enable transition on next frame
+    requestAnimationFrame(() => { track.style.transition = ''; });
+  }
 
   function render() {
-    track.style.transform = `translateX(-${current * 100}vw)`;
+    const w = viewer.clientWidth;
+    track.style.transform = `translateX(${-current * w}px)`;
     pageNum.textContent = current + 1;
     dots.forEach((d, i) => d.classList.toggle('active', i === current));
     prevBtn.disabled = current === 0;
@@ -169,6 +180,9 @@
     current = Math.max(0, Math.min(total - 1, i));
     render();
   }
+
+  window.addEventListener('resize', layout);
+  window.addEventListener('orientationchange', layout);
   prevBtn.addEventListener('click', () => goTo(current - 1));
   nextBtn.addEventListener('click', () => goTo(current + 1));
 
@@ -190,6 +204,7 @@
     touchStartX = null;
   });
 
+  layout();
   render();
 </script>
 
